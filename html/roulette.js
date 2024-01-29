@@ -11,6 +11,7 @@ let r = randomNumber(0,37);
 
 console.log(L[r]);
 
+
 if((r + 1) % 2 === 0)
 {
     console.log("rouge");
