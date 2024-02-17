@@ -1,26 +1,32 @@
-import tornado.websocket
+import tornado.websocket 
 
-clients=[]
+activeClients=[]
 
 class Handler(tornado.websocket.WebSocketHandler):
 
     async def open(self):
-        for c in clients:
+        print("OPENED!")
+        for c in activeClients:
             await c.write_message("Someone entered the chat")
-        clients.append(self)
 
-    async def on_message(self, msg):
-        for c in clients:
+        activeClients.append(self)
+
+    async def on_message(self,msg):
+        print("MESSAGE",msg)
+        for c in activeClients:
             await c.write_message(msg)
 
-
-    async def on_close(self):
-        for i in range(len(clients)):
-            if clients[i] == self:
-                del clients[i]
+    def on_close(self):
+        print("CLOSED")
+        for i in range(len(activeClients)):
+            if activeClients[i] == self:
+                del activeClients[i]
                 break
-        for c in clients:
-            await c.write_message("Someone left the chat")
 
-    def check_origin(self, *args):
-        return True #Welcome Friend!
+        for c in activeClients:
+            c.write_message("Someone left the chat")
+
+
+    def check_origin(self,*args):
+        print(args)
+        return True  #welcome, Friend!
