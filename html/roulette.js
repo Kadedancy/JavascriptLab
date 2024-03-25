@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sock.send(JSON.stringify(result));
     }
 
-    // Event listener for the "spinButton" click
+    // Event listener for the "sendButton" click
     document.getElementById('sendButton').addEventListener('click', () => {
         // Trigger a spin request when the button is clicked
         spinRoulette();
